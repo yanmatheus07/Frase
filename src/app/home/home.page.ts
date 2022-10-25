@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,7 +7,20 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  frase: string;
+  autor: string;
+  constructor(private http: HttpClient) {}
 
-  constructor() {}
+  ngOnInit(){
+    this.solicitarFrase();
+  }
+
+  solicitarFrase(){
+    const url = "http://lucasreno.kinghost.net/frase";
+    this.http.get(url).subscribe( resposta => {
+      this.frase = resposta[0].frase;
+      this.autor = resposta[0].autor;
+    });
+  }
 
 }
